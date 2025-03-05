@@ -1,28 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+const FavoritesList = ({ favorites, removeFromFavorites }) => (
+  <div>
+    <h2>My Favorite Movies</h2>
+    {favorites.length === 0 && <p>No favorite movies added yet.</p>}
+    {favorites.map((movie) => (
+      <div key={movie.imdbID} className="d-flex align-items-center mb-3">
+        <img src={movie.Poster} alt={movie.Title} width="50" />
+        <p className="mb-0 mx-3">{movie.Title}</p>
+        <button onClick={() => removeFromFavorites(movie.imdbID)} className="btn btn-danger btn-sm">Remove</button>
+      </div>
+    ))}
+  </div>
+);
 
-  const handleLogin = () => {
-    if (email && password) {
-      alert("Login Successful!");
-      navigate("/");
-    } else {
-      alert("Enter valid credentials!");
-    }
-  };
-
-  return (
-    <div className="container text-light text-center mt-5">
-      <h2>🔑 Login to StreamFlix</h2>
-      <input type="email" className="form-control my-2" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" className="form-control my-2" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button className="btn btn-warning" onClick={handleLogin}>Login</button>
-    </div>
-  );
-};
-
-export default Login;
+export default FavoritesList;
